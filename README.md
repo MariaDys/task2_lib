@@ -352,6 +352,6 @@ pip install semgrep
 python test_semgrep.py
 ```
 
-Результаты:
+**Результаты:**
 
 <img width="700" height="400" alt="Снимок экрана 2026-04-05 в 23 36 52" src="https://github.com/user-attachments/assets/d710196d-19e9-4583-92b3-c8692d86bc6c" />
