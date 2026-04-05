@@ -1,0 +1,37 @@
+rules:
+- id: php-process-shell
+  patterns:
+    - pattern: Process::fromShellCommandline(...)
+  message: "Запрещено использовать shell (риск injection)"
+  severity: ERROR
+  languages: [php]
+
+- id: php-process-string
+  patterns:
+    - pattern: new Process($CMD)
+    - pattern-not: new Process([ ... ])
+  message: "Команда должна передаваться массивом"
+  severity: ERROR
+  languages: [php]
+
+- id: php-process-user-command
+  pattern: new Process([$_GET[...], ...])
+  message: "Нельзя использовать пользовательский ввод"
+  severity: ERROR
+  languages: [php]
+
+- id: php-process-error-leak
+  patterns:
+    - pattern: echo $ERR;
+    - metavariable-pattern:
+        metavariable: $ERR
+        pattern: $X->getErrorOutput()
+  message: "Нельзя раскрывать stderr пользователю"
+  severity: WARNING
+  languages: [php]
+
+- id: php-process-no-timeout
+  pattern: $X->setTimeout(null)
+  message: "Нельзя отключать timeout (риск DoS)"
+  severity: WARNING
+  languages: [php]
